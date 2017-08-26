@@ -3,26 +3,61 @@
 
     <div class="detail">
       <div class="container">
-        <button type="button" @click="fullScreen($event)">Open More Detail</button>
-        <img src="../assets/andrew-pons-57133.jpg"/>
+        <button type="button" class="fs" @click="fullScreen($event)">Open More Detail</button>
+        <div class="card">
+          <button type="button" class="cl" @click="close($event)">back</button>
+        </div>
+        <figure>
+          <img src="../assets/ahmed-saffu-208365.jpg"/>
+        </figure>
       </div>
     </div>
+
     <div class="detail">
       <div class="container">
-        <button type="button" @click="fullScreen($event)">Open More Detail</button>
-        <img src="../assets/eddie-kopp-263580.jpg"/>
+        <button type="button" class="fs" @click="fullScreen($event)">Open More Detail</button>
+        <div class="card">
+          <button type="button" class="cl" @click="close($event)">back</button>
+        </div>
+        <figure>
+          <img src="../assets/erica-leong-276350.jpg"/>
+        </figure>
       </div>
     </div>
+
     <div class="detail">
       <div class="container">
-        <button type="button" @click="fullScreen($event)">Open More Detail</button>
-        <img src="../assets/jacob-hilton-228982.jpg"/>
+        <button type="button" class="fs" @click="fullScreen($event)">Open More Detail</button>
+        <div class="card">
+          <button type="button" class="cl" @click="close($event)">back</button>
+        </div>
+        <figure>
+          <img src="../assets/mona-magnussen-66660.jpg"/>
+        </figure>
       </div>
     </div>
+
     <div class="detail">
       <div class="container">
-        <button type="button" @click="fullScreen($event)">Open More Detail</button>
-        <img src="../assets/kyaw-tun-263670.jpg"/>
+        <button type="button" class="fs" @click="fullScreen($event)">Open More Detail</button>
+        <div class="card">
+          <button type="button" class="cl" @click="close($event)">back</button>
+        </div>
+        <figure>
+          <img src="../assets/pacto-visual-157776.jpg"/>
+        </figure>
+      </div>
+    </div>
+
+    <div class="detail">
+      <div class="container">
+        <button type="button" class="fs" @click="fullScreen($event)">Open More Detail</button>
+        <div class="card">
+          <button type="button" class="cl" @click="close($event)">back</button>
+        </div>
+        <figure>
+          <img src="../assets/paul-330307.jpg"/>
+        </figure>
       </div>
     </div>
 
@@ -30,6 +65,8 @@
 </template>
 
 <script>
+  //  import anime from 'animejs'
+
   let transEndEventNames = {
     'WebkitTransition': 'webkitTransitionEnd',
     'MozTransition': 'transitionend',
@@ -41,78 +78,70 @@
     name: 'Index',
     data () {
       return {
-        el: null
+        styles: null
       }
     },
     methods: {
+      close (event) {
+        const $el = event.target.parentNode.parentNode.parentNode
+        $el.classList.remove('start-fullScreen')
+
+        const listener = () => {
+          let $allShadowEl = document.querySelector('.shadow-detail')
+          $el.parentNode.removeChild($allShadowEl)
+
+          $el.style = ''
+          $el.classList.remove('done-fullScreen')
+
+          document.querySelector('body').style.overflow = ''
+          $el.removeEventListener(transEndEventName, listener)
+        }
+
+        $el.addEventListener(transEndEventName, listener)
+
+        $el.style.left = this.styles.left + 'px'
+        $el.style.top = this.styles.top + 'px'
+        $el.style.width = this.styles.width + 'px'
+        $el.style.height = this.styles.height + 'px'
+      },
+
       fullScreen (event) {
         const $el = event.target.parentNode.parentNode
+        const rect = $el.getBoundingClientRect()
+        const elLeft = rect.left
+        const elTop = rect.top
+        const elWidth = $el.offsetWidth
+        const elHeight = $el.offsetHeight
 
-        if ($el.classList.contains('is-fullScreen')) {
-          //
-          // EXIT FULL-WIDTH
-          //
-          let that = this
-          const listener = function () {
-            console.log('event')
-            if (that.el) {
-              $el.parentNode.removeChild(that.el)
-              that.el = null
-            }
-            //
-            $el.style = ''
-            $el.classList.remove('is-fullScreen')
-            //
-            document.querySelector('body').style.overflow = ''
-            $el.removeEventListener(transEndEventName, listener)
-          }
-          $el.addEventListener(transEndEventName, listener)
-          //
-          const VAL = JSON.parse(localStorage.verahu)
-          //
-          $el.style.left = VAL.left + 'px'
-          $el.style.top = VAL.top + 'px'
-          $el.style.width = VAL.width + 'px'
-          $el.style.height = VAL.height + 'px'
-          //
-        } else {
-          //
-          // ENTER FULL-WIDTH
-          //
-          const rect = $el.getBoundingClientRect()
-          const elLeft = rect.left
-          const elTop = rect.top
-          const elWidth = $el.offsetWidth
-          const elHeight = $el.offsetHeight
-
-          localStorage.verahu = JSON.stringify({
-            left: elLeft,
-            top: elTop,
-            width: elWidth,
-            height: elHeight
-          })
-
-          $el.style.left = elLeft + 'px'
-          $el.style.top = elTop + 'px'
-          $el.style.width = elWidth + 'px'
-          $el.style.height = elHeight + 'px'
-          //
-          setTimeout(() => {
-            const $newEl = document.createElement('DIV')
-            $newEl.classList.add('detail')
-            $newEl.style.height = elHeight + 'px'
-            $el.parentNode.insertBefore($newEl, $el)
-            this.el = $newEl
-            //
-            document.querySelector('body').style.overflow = 'hidden'
-            //
-            $el.classList.add('is-fullScreen')
-            $el.style.left = 0
-            $el.style.top = 0
-            $el.style.width = '100%'
-            $el.style.height = '100%'
-          }, 10)
+        this.styles = {
+          left: elLeft,
+          top: elTop,
+          width: elWidth,
+          height: elHeight
         }
+
+        $el.classList.add('start-fullScreen')
+
+        $el.style.left = elLeft + 'px'
+        $el.style.top = elTop + 'px'
+        $el.style.width = elWidth + 'px'
+        $el.style.height = elHeight + 'px'
+
+        setTimeout(() => {
+          const $newEl = document.createElement('DIV')
+          $newEl.classList.add('shadow-detail')
+          $newEl.style.height = elHeight + 'px'
+          $el.parentNode.insertBefore($newEl, $el)
+
+          document.querySelector('body').style.overflow = 'hidden'
+
+          $el.classList.add('done-fullScreen')
+
+          $el.style.left = 0
+          $el.style.top = 0
+          $el.style.width = '100%'
+          $el.style.height = '100%'
+        }, 10)
       }
     }
   }
@@ -124,28 +153,37 @@
     padding: 40px;
   }
 
+  .shadow-detail,
   .detail {
+    height: 340px;
     margin-bottom: 30px;
-    transition: all .3s;
-    background-color: #000;
+  }
+
+  .detail {
+    overflow: hidden;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 10px 30px rgba(black, .2);
+    transition: all .7s;
+    transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     .container {
       position: relative;
-      height: 300px;
-      overflow: hidden;
+      height: 100%;
     }
 
-    &.is-fullScreen {
+    &.start-fullScreen {
+      border-radius: 0;
+      // box-shadow: 0 0 0 rgba(black, 0);
+    }
+
+    &.done-fullScreen {
       z-index: 10;
       position: fixed;
-
-      .container {
-        height: 100%;
-      }
     }
 
-    button {
-      z-index: 9;
+    .fs {
+      z-index: 10;
       position: absolute;
       left: 0;
       top: 0;
@@ -157,8 +195,53 @@
       border: 0;
     }
 
-    img {
+    &.start-fullScreen {
+      .fs {
+        display: none;
+      }
+    }
+
+    .card {
+      z-index: 9;
+      position: absolute;
+      left: 0;
+      top: 0;
       width: 100%;
+      height: 100%;
+      max-height: 400px;
+    }
+
+    .cl {
+      display: none;
+    }
+
+    &.start-fullScreen {
+      .cl {
+        display: block;
+      }
+    }
+
+    figure {
+      overflow: hidden;
+      max-height: 400px;
+      position: absolute;
+      left: -6%;
+      top: -6%;
+      right: -6%;
+      bottom: -6%;
+      width: 112%;
+      transition: all .7s;
+      transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    &.start-fullScreen {
+      figure {
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+      }
     }
   }
 
