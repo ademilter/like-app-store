@@ -1,23 +1,22 @@
 <template>
-  <div class="details">
-    <img src="../assets/ahmed-saffu-208365.jpg"/>
-    <Detail v-for="(detail, index) in details"
-            :detail="detail"
-            :key="index"></Detail>
+  <div class="Cards">
+    <Card v-for="(Card, Index) in Cards"
+            :Card="Card"
+            :key="Index"></Card>
   </div>
 </template>
 
 <script>
-  import Detail from './detail'
+  import Card from './card'
 
   export default {
     name: 'Index',
     components: {
-      Detail
+      Card
     },
     data () {
       return {
-        details: [
+        Cards: [
           {
             cover_photo: 'ahmed-saffu-208365.jpg',
             title: 'asdasd'
@@ -46,12 +45,12 @@
 
 <style lang="scss">
 
-  .details {
+  .Cards {
     padding: 40px;
   }
 
-  .shadow-detail,
-  .detail {
+  .shadow-Card,
+  .Card {
     height: 340px;
     margin-bottom: 30px;
   }

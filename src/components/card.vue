@@ -1,12 +1,12 @@
 <template>
-  <div class="detail">
+  <div class="Card">
     <div class="container">
       <button type="button" class="fs" @click="enterFullScreen">Open More Detail</button>
       <div class="card">
         <button type="button" class="cl" @click="exitFullScreen">back</button>
       </div>
       <figure>
-        <img :src="detail.cover_photo"/>
+        <img :src="getImgUrl()"/>
       </figure>
     </div>
   </div>
@@ -14,14 +14,19 @@
 
 <script>
   export default {
-    name: 'Detail',
-    props: ['detail'],
+    name: 'Card',
+    props: ['Card'],
     data () {
       return {
         init_styles: {}
       }
     },
     methods: {
+      getImgUrl () {
+        // Fixed: dinamic image path
+        let images = require.context('../assets/')
+        return images('./' + this.Card.cover_photo)
+      },
       whichTransitionEvent () {
         // https://davidwalsh.name/css-animation-callback
         let t
@@ -49,7 +54,7 @@
         $el.style.height = this.init_styles.height + 'px'
 
         const listener = () => {
-          let $allShadowEl = document.querySelector('.shadow-detail')
+          let $allShadowEl = document.querySelector('.shadow-Card')
           $el.parentNode.removeChild($allShadowEl)
 
           $el.style = ''
@@ -85,7 +90,7 @@
 
         setTimeout(() => {
           let $newEl = document.createElement('DIV')
-          $newEl.classList.add('shadow-detail')
+          $newEl.classList.add('shadow-Card')
           $newEl.style.height = elHeight + 'px'
           $el.parentNode.insertBefore($newEl, $el)
 
@@ -105,7 +110,7 @@
 
 <style lang="scss">
 
-  .detail {
+  .Card {
     overflow: hidden;
     border-radius: 15px;
     background-color: #fff;

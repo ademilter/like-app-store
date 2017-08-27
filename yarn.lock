@@ -2543,6 +2543,16 @@ https-browserify@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
 
+hyperscript-attribute-to-property@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/hyperscript-attribute-to-property/-/hyperscript-attribute-to-property-1.0.0.tgz#825308d49bb8e2957923f731981bcc811cad7aff"
+
+hyperx@^2.0.5:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/hyperx/-/hyperx-2.3.0.tgz#70f473d66d4ad550ddd1c83e4be2651276bbf1e2"
+  dependencies:
+    hyperscript-attribute-to-property "^1.0.0"
+
 icss-replace-symbols@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/icss-replace-symbols/-/icss-replace-symbols-1.1.0.tgz#06ea6f83679a7749e386cfe1fe812ae5db223ded"
@@ -5009,6 +5019,12 @@ vm-browserify@0.0.4:
 vue-hot-reload-api@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
+
+vue-html@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/vue-html/-/vue-html-0.3.0.tgz#f13a3e5ffa6896be43a0eefd5b81ea076d51a538"
+  dependencies:
+    hyperx "^2.0.5"
 
 vue-loader@^12.1.0:
   version "12.2.2"

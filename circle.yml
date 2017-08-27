@@ -1,0 +1,17 @@
+machine:
+  timezone:
+    Europe/Istanbul
+  node:
+    version: 7.8.0
+database:
+  override:
+    - echo "Skipping DB."
+dependencies:
+  post:
+    - npm rebuild node-sass
+    - npm run build
+deployment:
+  production:
+    branch: master
+    commands:
+      - surge --project ./dist/ --domain like-app-store.surge.sh
